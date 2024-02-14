@@ -131,22 +131,19 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { BASE_URL, options } from './pixabay-api.js';
 
-///////////////////////////////////////////////////////////////
 
-// DOM LINKS
 const galleryEl = document.querySelector('.gallery');
 const searchInputEl = document.querySelector('input[name="searchQuery"');
 const searchFormEl = document.getElementById('search-form');
 
-///////////////////////////////////////////////////////////////
 
-// instantiate simplelightbox
 const lightbox = new SimpleLightbox('.lightbox', {
   captionsData: 'alt',
   captionDelay: 250,
 });
 
-///////////////////////////////////////////////////////////////
+
+
 let totalHits = 0;
 let reachedEnd = false;
 
@@ -196,14 +193,13 @@ function renderGallery(hits) {
   //   If the user has reached the end of the collection
   if (options.params.page * options.params.per_page >= totalHits) {
     if (!reachedEnd) {
-      Notify.info("We're sorry, but you've reached the end of search results.");
+      Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
       reachedEnd = true;
     }
   }
   lightbox.refresh();
 }
 
-///////////////////////////////////////////////////////////////
 
 async function handleSubmit(e) {
   e.preventDefault();
@@ -223,11 +219,11 @@ async function handleSubmit(e) {
     console.log(hits);
 
     if (hits.length === 0) {
-      Notify.failure(
+      Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
     } else {
-      Notify.success(`Hooray! We found ${totalHits} images.`);
+      Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
       renderGallery(hits);
     }
     searchInputEl.value = '';
@@ -238,7 +234,6 @@ async function handleSubmit(e) {
 
 searchFormEl.addEventListener('submit', handleSubmit);
 
-///////////////////////////////////////////////////////////////
 
 async function loadMore() {
   options.params.page += 1;
